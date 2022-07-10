@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Script Maker - Leonardo Jacon</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container p-4">
+      <div class="h-100 d-flex align-items-center justify-content-center">
+        <img class="img-fluid" src="https://i.imgur.com/fJOI7y7.png" alt="LOGO">
+      </div>
+      <form action="#" method="post">
+        <div class="form-group">
+          <label for="nameLabel">Nome do Agente: </label>
+          <input type="text" class="form-control" id="agent" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="nameLabel">Nome do Cliente: </label>
+          <input type="text" class="form-control" id="name" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="telLabel">Telefone: </label>
+          <input type="text" class="form-control" autocomplete="off" id="tel">
+        </div>
+        <div class="form-group">
+          <label for="problemLabel">Problema: </label>
+          <input type="text" class="form-control" id="problem">
+        </div>
+        <hr>
+        <div class="form-group-inline d-flex align-items-center justify-content-center">
+          <button name="button" onclick="change(event, '#atendimento')" class="btn btn-success mr-2">Atendimento</button>
+          <button name="button" onclick="change(event, '#bo')" class="btn btn-info mr-2">BO</button>
+          <button name="button" onclick="change(event, '#vt')" class="btn btn-warning mr-2">VT</button>
+          <button name="button" onclick="change(event, '#outage')" class="btn btn-danger mr-2">Instabilidade</button>
+        </div>
+      <div id="atendimento">
+        <div class="form-group">
+          <label for="problemLabel">Tecnologia: </label>
+          <select class="custom-select" id="tech">
+            <option value="fiber">FIBER</option>
+            <option value="fiber-wifi">FIBER-WIFI</option>
+            <option value="nokia">NOKIA</option>
+            <option value="radio">RADIO</option>
+            <option value="huawei">HUAWEI</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="problemLabel">Sinal da Fibra: </label>
+          <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><span class="badge badge-danger">-</span></span>
+              </div>
+                <input type="number" id="signal" name="signal-form" class="form-control">
+              <div class="input-group-append">
+                <span class="input-group-text"> <span class="badge badge-success">dBm</span></span>
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="lanLabel">LANS: </label>
+          <input type="text" class="form-control" id="lan">
+        </div>
+        <div class="form-group">
+          <label for="serialLabel">Serial: </label>
+          <input type="text" class="form-control" autocomplete="off" id="serial">
+        </div>
+        <div class="form-group">
+          <label for="resLabel">Resolução: </label>
+          <select class="custom-select" id="res">
+            <option value="">Não catalogado</option>
+            <option value="Acessado ONU da cliente, verificado parâmetros, tudo dentro do padrão, efetuado reboot, cliente voltou a navegar.">REBOOTA QUE VOLTA</option>
+            <option value="Zerado o MAC do cliente, efetuado reboot, cliente voltou a navegar.">Zerar MAC</option>
+            <option value="Liberação sistêmica não liberou a conexão do cliente, equipamento reiniciado, cliente voltou a navegar">Liberação de confiança</option>
+            <option value="Alterado DHCP LEASE TIME, feito reboot, cliente voltou a navegar normalmente.">DCHP LEASE TIME</option>
+          </select>
+        </div>
+        <div class="form-group-inline d-flex align-items-center justify-content-center">
+          <button name="button" onclick="gerarAtendimento(event)" class="btn btn-success mr-2">Gerar Script</button>
+          <button name="button" onclick="resetAtendimento(event)" class="btn btn-danger mr-2">Reset</button>
+        </div>
+      </div>
+      <div id="bo">
+        <div class="form-group">
+          <label for="bocondLabel">Condomínio: </label>
+          <input type="text" class="form-control" autocomplete="off" id="bocond">
+        </div>
+        <div class="form-group">
+          <label for="botimeLabel">Melhor horário para contato: </label>
+          <input type="text" class="form-control" id="botime" autocomplete="false">
+        </div>
+        <div class="form-group">
+          <label for="boDoLabel">O que foi feito: </label>
+          <input type="text" class="form-control" id="boDoproblem">
+        </div>
+        <hr>
+        <div class="form-group-inline d-flex align-items-center justify-content-center">
+          <button name="button" onclick="gerarBO(event)" class="btn btn-success mr-2">Gerar Script</button>
+          <button name="button" onclick="resetBO(event)" class="btn btn-danger mr-2">Reset</button>
+        </div>
+      </div>
+
+      <div id="vt">
+        <div class="form-group">
+          <label for="vtatdLabel">ATD: </label>
+          <input type="text" class="form-control" id="vtatd">
+        </div>
+        <div class="form-group">
+          <label for="vtnameTechLabel">Nome de quem irá receber o técnico: </label>
+          <input type="text" class="form-control" autocomplete="off" id="vtnometech">
+        </div>
+        <div class="form-group">
+          <label for="vttimeLabel">Melhor horário para visita: </label>
+          <input type="text" class="form-control" autocomplete="off" id="vttime">
+        </div>
+        <div class="form-group">
+          <label for="vtrefLabel">Ponto de referência: </label>
+          <input type="text" class="form-control" autocomplete="off" id="vtref">
+        </div>
+        <div class="form-group">
+          <label for="vtDoLabel">O que precisa ser feito: </label>
+          <input type="text" class="form-control" autocomplete="off" id="vtDo">
+        </div>
+        <div class="form-group">
+          <label for="vthaveDoneLabel">O que foi feito antes de abrir a VT: </label>
+          <input type="text" class="form-control" autocomplete="off" id="vtHaveDone">
+        </div>
+        <div class="form-group-inline d-flex align-items-center justify-content-center">
+          <button name="button" onclick="gerarVT(event)" class="btn btn-success mr-2">Gerar Script</button>
+          <button name="button" onclick="resetVT(event)" class="btn btn-danger mr-2">Reset</button>
+        </div>
+      </div>
+
+      <div id="outage">
+        <div class="form-group">
+          <label for="outageTypeLabel">Instabilidade: </label>
+          <input type="text" class="form-control" id="outageType">
+        </div>
+        <div class="form-group-inline d-flex align-items-center justify-content-center">
+          <button name="button" onclick="gerarOutage(event)" class="btn btn-success mr-2">Gerar Script</button>
+          <button name="button" onclick="resetOutage(event)" class="btn btn-danger mr-2">Reset</button>
+        </div>
+      </div>
+
+      </form>
+      <div class="h-100 d-flex align-items-center justify-content-center mt-2">
+        <p>Desenvolvido com &hearts; por <a href="https://github.com/leojacondev">@leojacondev</a></p>
+      </div>
+
+      </div>
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+      hide('#atendimento')
+      hide('#bo')
+      hide('#vt')
+      hide('#outage')
+    });
+
+      function hide(id) {
+        $(id).hide();
+      }
+
+      function show(id) {
+        $(id).show();
+      }
+
+      function change(e, id) {
+        e.preventDefault();
+        hide('#atendimento');
+        hide('#bo');
+        hide('#vt');
+        hide('#outage');
+        show(id);
+      }
+
+      function textToClipboard (text) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        alert("Copiado para área de transferência");
+      }
+
+      function resetAtendimento(e) {
+          e.preventDefault();
+          document.getElementById('name').value = "";
+          document.getElementById('tel').value = "";
+          document.getElementById('problem').value = "";
+          document.getElementById('tech').value = "";
+          document.getElementById('signal').value = "";
+          document.getElementById('lan').value = "";
+          document.getElementById('serial').value = "";
+          document.getElementById('res').value = "";
+      }
+
+      function gerarAtendimento(e) {
+        e.preventDefault();
+        var agent = document.getElementById('agent').value;
+        var name = document.getElementById('name').value;
+        var tel = document.getElementById('tel').value;
+        var problem = document.getElementById('problem').value;
+        var tech = document.getElementById('tech').value;
+        var signal = document.getElementById('signal').value;
+        var lan = document.getElementById('lan').value;
+        var serial = document.getElementById('serial').value;
+        var res = document.getElementById('res').value;
+
+        var script = `Atendimento incluído por SUP N1 - ${agent}\nValidado com: ${name} // ${tel}\nProblema: ${problem}\n\nTipo: ${tech.toUpperCase()}\nSinal da Fibra: -${signal} dBm\nNegociação de LANS: ${lan}\nSerial: ${serial}\n\nResolução: ${res}`
+        textToClipboard(script);
+      }
+
+      function gerarBO(e) {
+        e.preventDefault();
+        var agent = document.getElementById('agent').value;
+        var name = document.getElementById('name').value;
+        var tel = document.getElementById('tel').value;
+        var problem = document.getElementById('problem').value;
+        var bocond = document.getElementById('bocond').value;
+        var boDoproblem = document.getElementById('boDoproblem').value;
+        var botime = document.getElementById('botime').value;
+
+        var script = `Atendimento incluído por SUP N1 - ${agent}\n\nNome do contato: ${name}\nMelhor telefone para contato: ${tel}\nMelhor horário para contato: ${botime}\nCondomínio: ${bocond}\n\nProblema do cliente: ${problem}\n\nO que foi realizado: ${boDoproblem}`
+        textToClipboard(script);
+      }
+
+      function resetBO(e) {
+          e.preventDefault();
+          document.getElementById('name').value = "";
+          document.getElementById('tel').value = "";
+          document.getElementById('problem').value = "";
+          document.getElementById('bocond').value = "";
+          document.getElementById('botime').value = "";
+          document.getElementById('boDoproblem').value = "";
+      }
+
+      function gerarVT(e) {
+        e.preventDefault();
+        var agent = document.getElementById('agent').value;
+        var name = document.getElementById('name').value;
+        var tel = document.getElementById('tel').value;
+        var problem = document.getElementById('problem').value;
+        var atd = document.getElementById('vtatd').value;
+        var nometech = document.getElementById('vtnometech').value;
+        var time = document.getElementById('vttime').value;
+        var ref = document.getElementById('vtref').value;
+        var todo = document.getElementById('vtDo').value;
+        var havedone = document.getElementById('vtHaveDone').value;
+
+        if(havedone == "LOS") {
+          havedone = "Cliente entrou em contato informando estar sem conexão. Verificado cliente estava desconectado do Interfocus e com luz vermelha no modem. Verificado na UNM verifiquei de que estava constando alarme de LINK_LOSS."
+        }
+
+        var script = `Atendimento incluído por Suporte Técnico Nível 1 - ${agent}\n\nOrdem encaminhada devido a: ${problem}\n\nATD: ${atd}\n\nNome de quem ira receber o tecnico: ${nometech}\nNome do contato: ${name}\nMelhor telefone para contato: ${tel}\nMelhor horário para visita: ${time}\nPonto de Referencia: ${ref}\n\nO que é necessario realizar: ${todo}\n\nO que foi realizado antes de abrir OS: ${havedone}\n\nConfirmado com o cliente e o mesmo não esta cumprindo isolamento, não há ninguém com sintomas de COVID na residência e o cliente esta ciente que o técnico irá tomar todas as precauções devido a pandemia.`
+        textToClipboard(script);
+      }
+
+      function resetVT(e) {
+          e.preventDefault();
+          document.getElementById('name').value = "";
+          document.getElementById('tel').value = "";
+          document.getElementById('problem').value = "";
+          document.getElementById('vtatd').value = "";
+          document.getElementById('vtnometech').value = "";
+          document.getElementById('vttime').value = "";
+          document.getElementById('vtref').value = "";
+          document.getElementById('vtDo').value = "";
+          document.getElementById('vtHaveDone').value = "";
+      }
+
+      function gerarOutage(e) {
+        e.preventDefault();
+        var agent = document.getElementById('agent').value;
+        var name = document.getElementById('name').value;
+        var tel = document.getElementById('tel').value;
+        var problem = document.getElementById('outageType').value;
+
+        var script = `Atendimento incluído por SUP N1 - ${agent}\n\nValidado com: ${name} // ${tel}\n\n${problem}`
+        textToClipboard(script);
+      }
+
+      function resetOutage(e) {
+          e.preventDefault();
+          document.getElementById('name').value = "";
+          document.getElementById('tel').value = "";
+      }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  </body>
+</html>
